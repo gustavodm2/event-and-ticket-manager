@@ -1,6 +1,5 @@
 package events.entities;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,11 +13,37 @@ public class Event {
     private Long id;
     private String eventName;
     private String dateTime;
-    private String cep;
-    private String logradouro;
-    private String bairro;
-    private String cidade;
-    private String uf;
+    private Address cep;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Address getCep() {
+        return cep;
+    }
+
+    public void setCep(Address cep) {
+        this.cep = cep;
+    }
 }
