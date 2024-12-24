@@ -8,20 +8,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Event {
-
-    @Id
-    private Long id;
+//
+//    @Id
+//    private Long id;
     private String eventName;
     private String dateTime;
     private Address cep;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
     public String getEventName() {
         return eventName;
