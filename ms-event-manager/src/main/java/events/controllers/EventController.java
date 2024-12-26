@@ -1,5 +1,6 @@
 package events.controllers;
 
+import events.entities.DTOs.CreateEventDTO;
 import events.entities.Event;
 import events.services.EventService;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,9 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+    public ResponseEntity<Event> createEvent(@RequestBody CreateEventDTO event) {
         Event createdEvent = eventService.createEvent(event);
+
         return ResponseEntity.ok(createdEvent);
     }
 

@@ -1,7 +1,9 @@
 package events.services;
 
 import events.entities.Address;
+import events.entities.DTOs.CreateEventDTO;
 import events.entities.Event;
+import events.mapper.EventMapper;
 import events.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +14,16 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final CepService cepService;
+    private final EventMapper eventMapper;
 
-    public EventService(EventRepository eventRepository, CepService cepService) {
+    public EventService(EventRepository eventRepository, CepService cepService, EventMapper eventMapper) {
         this.eventRepository = eventRepository;
         this.cepService = cepService;
+        this.eventMapper = eventMapper;
     }
 
-    public Event createEvent(Event event) {
-
-        Address address = cepService.getAddressFromCep(event.getCep().getCep());
-        event.setCep(address);
+    public Event createEvent(CreateEventDTO dto) {
+        Event event = eventMapper.toEntity(dto);
 
         return eventRepository.save(event);
     }
