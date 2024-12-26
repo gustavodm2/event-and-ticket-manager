@@ -37,9 +37,11 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public Optional<Event> getEventById(String id){
-        return eventRepository.findById(id);
+    public Event getEventById(String id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + id));
     }
+
 
     public Event updateEvent(UpdateEventDTO dto, String id) {
         Event event = eventRepository.findById(id)
