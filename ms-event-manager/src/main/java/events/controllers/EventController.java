@@ -40,6 +40,12 @@ public class EventController {
         return ResponseEntity.ok(event);
     }
 
+    @GetMapping("/sorted")
+    public ResponseEntity<List<Event>> getAllEventsSorted() {
+        List<Event> events = eventService.getAllEventsSortedByName();
+        return ResponseEntity.ok(events);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable String id, @RequestBody UpdateEventDTO event){
         Event updatedEvent = eventService.updateEvent(event, id);
