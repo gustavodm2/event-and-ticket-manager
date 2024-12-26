@@ -89,4 +89,21 @@ public class EventServiceTests {
         verify(eventRepository, times(1)).findById(id);
     }
 
+    @Test
+    void updateEvent_ShouldUpdateAndSaveEvent() {
+        String id = "123";
+        UpdateEventDTO dto = new UpdateEventDTO();
+        Event event = new Event();
+        when(eventRepository.findById(id)).thenReturn(Optional.of(event));
+        doNothing().when(updateEventMapper).updateEntity(dto, event);
+        when(eventRepository.save(event)).thenReturn(event);
+
+        Event updatedEvent = eventService.updateEvent(dto, id);
+
+        assertNotNull(updatedEvent);
+        verify(eventRepository, times(1)).findById(id);
+        verify(updateEventMapper, times(1)).updateEntity(dto, event);
+        verify(eventRepository, times(1)).save(event);
+    }
+
 }
