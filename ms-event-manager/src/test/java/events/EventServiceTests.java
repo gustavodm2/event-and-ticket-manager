@@ -74,10 +74,18 @@ public class EventServiceTests {
         event.setId(id);
         when(eventRepository.findById(id)).thenReturn(Optional.of(event));
 
-        Optional<Event> result = eventService.getEventById(id);
+        Event result = eventService.getEventById(id);
 
-        assertTrue(result.isPresent());
-        assertEquals(id, result.get().getId());
+        assertEquals(id, result.getId());
+        verify(eventRepository, times(1)).findById(id);
+    }
+
+    @Test
+    void getEventById_ShouldThrowIfEventDoesNotExist() {
+        String id = "123";
+        when(eventRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> eventService.getEventById(id));
         verify(eventRepository, times(1)).findById(id);
     }
 
