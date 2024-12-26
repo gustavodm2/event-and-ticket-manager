@@ -1,6 +1,7 @@
 package events.controllers;
 
 import events.entities.DTOs.CreateEventDTO;
+import events.entities.DTOs.UpdateEventDTO;
 import events.entities.Event;
 import events.services.EventService;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,13 @@ public class EventController {
     public ResponseEntity<Optional<Event>> getEventById(@PathVariable String id){
         Optional<Event> event = eventService.getEventById(id);
         return ResponseEntity.ok(event);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Event> updateEvent(@PathVariable String id, @RequestBody UpdateEventDTO event){
+        Event updatedEvent = eventService.updateEvent(event, id);
+
+        return ResponseEntity.ok(updatedEvent);
     }
 
 
