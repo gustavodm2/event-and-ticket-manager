@@ -15,6 +15,9 @@ public class Address {
     private String bairro;
     private String uf;
 
+    public Address(String cep, String logradouro, String localidade, String bairro, String uf) {
+    }
+
     public String getCep() {
         return cep;
     }
