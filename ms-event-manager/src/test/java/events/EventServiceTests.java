@@ -105,5 +105,29 @@ public class EventServiceTests {
         verify(updateEventMapper, times(1)).updateEntity(dto, event);
         verify(eventRepository, times(1)).save(event);
     }
+    @Test
+    void deleteEvent_ShouldMarkEventAsDeleted() {
+        String id = "123";
+        Event event = new Event();
+        when(eventRepository.findById(id)).thenReturn(Optional.of(event));
+        when(eventRepository.save(event)).thenReturn(event);
+
+        Event deletedEvent = eventService.deleteEvent(id);
+
+        assertNotNull(deletedEvent);
+        assertTrue(deletedEvent.isDeleted());
+        verify(eventRepository, times(1)).findById(id);
+        verify(eventRepository, times(1)).save(event);
+    }
+
+    @Test
+    void deleteEvent_ShouldThrowIfEventDoesNotExist() {
+        String id = "123";
+        when(eventRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> eventService.deleteEvent(id));
+        verify(eventRepository, times(1)).findById(id);
+    }
+
 
 }
