@@ -5,6 +5,8 @@ import events.entities.Event;
 import events.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EventService {
 
@@ -17,9 +19,14 @@ public class EventService {
     }
 
     public Event createEvent(Event event) {
+
         Address address = cepService.getAddressFromCep(event.getCep().getCep());
         event.setCep(address);
 
         return eventRepository.save(event);
+    }
+
+    public List<Event> getAllEvents(){
+        return eventRepository.findAll();
     }
 }
