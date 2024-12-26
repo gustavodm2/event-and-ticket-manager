@@ -56,4 +56,15 @@ public class EventServiceTests {
         verify(eventRepository, times(1)).save(event);
     }
 
+    @Test
+    void getAllEvents_ShouldReturnListOfEvents() {
+        List<Event> events = List.of(new Event(), new Event());
+        when(eventRepository.findAll()).thenReturn(events);
+
+        List<Event> result = eventService.getAllEvents();
+
+        assertEquals(2, result.size());
+        verify(eventRepository, times(1)).findAll();
+    }
+
 }
