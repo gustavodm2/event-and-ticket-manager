@@ -1,5 +1,6 @@
 package events.services;
 
+import events.entities.Address;
 import events.entities.DTOs.CreateEventDTO;
 import events.entities.DTOs.UpdateEventDTO;
 import events.entities.Event;
