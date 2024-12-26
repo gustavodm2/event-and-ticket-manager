@@ -48,4 +48,18 @@ class CepServiceTest {
         assertEquals("Invalid CEP: Must be exactly 8 numeric characters.", exception.getMessage());
         verify(viaCepClient, never()).getAddressFromCep(anyString());
     }
+
+    @Test
+    void getAddressFromCep_ShouldThrowIllegalArgumentException_WhenViaCepClientReturnsBadRequest() {
+        String nonExistentCep = "87654321";
+        when(viaCepClient.getAddressFromCep(nonExistentCep)).thenThrow(FeignException.BadRequest.class);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> cepService.getAddressFromCep(nonExistentCep)
+        );
+
+        assertEquals("Invalid CEP: The given CEP does not exist or is improperly formatted.", exception.getMessage());
+        verify(viaCepClient, times(1)).getAddressFromCep(nonExistentCep);
+    }
 }
