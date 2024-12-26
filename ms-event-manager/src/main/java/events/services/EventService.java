@@ -1,10 +1,12 @@
 package events.services;
 
-import events.entities.Address;
 import events.entities.DTOs.CreateEventDTO;
+import events.entities.DTOs.UpdateEventDTO;
 import events.entities.Event;
-import events.mapper.EventMapper;
+import events.mapper.CreateEventMapper;
+import events.mapper.UpdateEventMapper;
 import events.repositories.EventRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,16 +17,18 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final CepService cepService;
-    private final EventMapper eventMapper;
+    private final CreateEventMapper createEventMapper;
+    private final UpdateEventMapper updateEventMapper;
 
-    public EventService(EventRepository eventRepository, CepService cepService, EventMapper eventMapper) {
+    public EventService(EventRepository eventRepository, CepService cepService, CreateEventMapper createEventMapper, UpdateEventMapper updateEventMapper) {
         this.eventRepository = eventRepository;
         this.cepService = cepService;
-        this.eventMapper = eventMapper;
+        this.createEventMapper = createEventMapper;
+        this.updateEventMapper = updateEventMapper;
     }
 
     public Event createEvent(CreateEventDTO dto) {
-        Event event = eventMapper.toEntity(dto);
+        Event event = createEventMapper.toEntity(dto);
 
         return eventRepository.save(event);
     }
@@ -36,4 +40,14 @@ public class EventService {
     public Optional<Event> getEventById(String id){
         return eventRepository.findById(id);
     }
+
+    public Event updateEvent(UpdateEventDTO dto, String id) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + id));
+
+        updateEventMapper.updateEntity(dto, event);
+
+        return eventRepository.save(event);
+    }
+
 }
