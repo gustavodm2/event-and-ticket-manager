@@ -67,4 +67,18 @@ public class EventServiceTests {
         verify(eventRepository, times(1)).findAll();
     }
 
+    @Test
+    void getEventById_ShouldReturnEventIfExists() {
+        String id = "123";
+        Event event = new Event();
+        event.setId(id);
+        when(eventRepository.findById(id)).thenReturn(Optional.of(event));
+
+        Optional<Event> result = eventService.getEventById(id);
+
+        assertTrue(result.isPresent());
+        assertEquals(id, result.get().getId());
+        verify(eventRepository, times(1)).findById(id);
+    }
+
 }
