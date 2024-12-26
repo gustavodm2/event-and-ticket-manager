@@ -62,4 +62,18 @@ class CepServiceTest {
         assertEquals("Invalid CEP: The given CEP does not exist or is improperly formatted.", exception.getMessage());
         verify(viaCepClient, times(1)).getAddressFromCep(nonExistentCep);
     }
+
+    @Test
+    void getAddressFromCep_ShouldThrowRuntimeException_WhenConnectionFails() {
+        String validCep = "97700085";
+        when(viaCepClient.getAddressFromCep(validCep)).thenThrow(RestClientException.class);
+
+        RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> cepService.getAddressFromCep(validCep)
+        );
+
+        assertTrue(exception.getMessage().contains("Error while connecting to ViaCEP service."));
+        verify(viaCepClient, times(1)).getAddressFromCep(validCep);
+    }
 }
