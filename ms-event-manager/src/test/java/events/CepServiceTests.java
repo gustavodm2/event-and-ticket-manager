@@ -12,7 +12,7 @@ import org.springframework.web.client.RestClientException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class CepServiceTest {
+class CepServiceTests {
 
     private ViaCepClient viaCepClient;
     private CepService cepService;
