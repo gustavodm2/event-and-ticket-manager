@@ -17,6 +17,16 @@ public class Event {
     private String dateTime;
     private Address cep;
 
+    private boolean isDeleted;
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
     public String getId() {
         return id;
     }

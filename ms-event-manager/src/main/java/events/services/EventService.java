@@ -50,4 +50,13 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    public void deleteEvent(String id) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + id));
+
+        event.setDeleted(true);
+
+        eventRepository.save(event);
+    }
+
 }
