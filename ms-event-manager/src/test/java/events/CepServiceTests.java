@@ -35,4 +35,17 @@ class CepServiceTest {
         assertEquals(mockAddress, result);
         verify(viaCepClient, times(1)).getAddressFromCep(validCep);
     }
+
+    @Test
+    void getAddressFromCep_ShouldThrowIllegalArgumentException_WhenCepIsInvalid() {
+        String invalidCep = "123";
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> cepService.getAddressFromCep(invalidCep)
+        );
+
+        assertEquals("Invalid CEP: Must be exactly 8 numeric characters.", exception.getMessage());
+        verify(viaCepClient, never()).getAddressFromCep(anyString());
+    }
 }
