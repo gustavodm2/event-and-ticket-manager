@@ -7,6 +7,7 @@ import events.mapper.CreateEventMapper;
 import events.mapper.UpdateEventMapper;
 import events.repositories.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,10 @@ public class EventService {
     public Event getEventById(String id) {
         return eventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + id));
+    }
+
+    public List<Event> getAllEventsSortedByName() {
+        return eventRepository.findAll(Sort.by(Sort.Order.asc("eventName")));
     }
 
 
