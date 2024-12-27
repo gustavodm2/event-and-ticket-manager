@@ -84,5 +84,24 @@ public class EventControllerTests {
         verify(eventService, times(1)).getEventById(eventId);
     }
 
+    @Test
+    void updateEvent_ShouldReturnUpdatedEvent() {
+        String eventId = "1";
+        UpdateEventDTO updateEventDTO = new UpdateEventDTO();
+        updateEventDTO.setEventName("Updated Event");
+
+        Event updatedEvent = new Event();
+        updatedEvent.setId(eventId);
+        updatedEvent.setEventName("Updated Event");
+
+        when(eventService.updateEvent(updateEventDTO, eventId)).thenReturn(updatedEvent);
+
+        ResponseEntity<Event> response = eventController.updateEvent(eventId, updateEventDTO);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(updatedEvent, response.getBody());
+        verify(eventService, times(1)).updateEvent(updateEventDTO, eventId);
+    }
+
 
 }
