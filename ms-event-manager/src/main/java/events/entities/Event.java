@@ -4,7 +4,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "db_events")
+@Document(collection = "db_event")
 @Data
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Event {
