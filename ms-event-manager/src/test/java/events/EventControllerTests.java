@@ -119,5 +119,28 @@ public class EventControllerTests {
         verify(eventService, times(1)).deleteEvent(eventId);
     }
 
+    @Test
+    void getAllEventsSorted_ShouldReturnSortedEvents() {
+        Event event1 = new Event();
+        event1.setId("1");
+        event1.setEventName("Alpha Event");
+
+        Event event2 = new Event();
+        event2.setId("2");
+        event2.setEventName("Beta Event");
+
+        List<Event> sortedEvents = Arrays.asList(event1, event2);
+
+        when(eventService.getAllEventsSortedByName()).thenReturn(sortedEvents);
+
+        ResponseEntity<List<Event>> response = eventController.getAllEventsSorted();
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(2, response.getBody().size());
+        assertEquals("Alpha Event", response.getBody().get(0).getEventName());
+        assertEquals("Beta Event", response.getBody().get(1).getEventName());
+        verify(eventService, times(1)).getAllEventsSortedByName();
+    }
+
 
 }
