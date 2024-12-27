@@ -7,10 +7,7 @@ public class EventDTO {
 
     private String eventName;
     private String dateTime;
-    private String logradouro;
-    private String bairro;
-    private String localidade;
-    private String uf;
+    private AddressDTO cep;
 
 
 }
