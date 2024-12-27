@@ -122,12 +122,12 @@ public class EventControllerTests {
     @Test
     void getAllEventsSorted_ShouldReturnSortedEvents() {
         Event event1 = new Event();
-        event1.setId("1");
-        event1.setEventName("Alpha Event");
+        event1.setId("2");
+        event1.setEventName("a");
 
         Event event2 = new Event();
-        event2.setId("2");
-        event2.setEventName("Beta Event");
+        event2.setId("1");
+        event2.setEventName("b");
 
         List<Event> sortedEvents = Arrays.asList(event1, event2);
 
@@ -137,8 +137,8 @@ public class EventControllerTests {
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(2, response.getBody().size());
-        assertEquals("Alpha Event", response.getBody().get(0).getEventName());
-        assertEquals("Beta Event", response.getBody().get(1).getEventName());
+        assertEquals("a", response.getBody().get(0).getEventName());
+        assertEquals("b", response.getBody().get(1).getEventName());
         verify(eventService, times(1)).getAllEventsSortedByName();
     }
 
