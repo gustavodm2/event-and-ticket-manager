@@ -67,4 +67,22 @@ public class EventControllerTests {
         assertEquals(mockEvents, response.getBody());
         verify(eventService, times(1)).getAllEvents();
     }
+
+    @Test
+    void getEventById_ShouldReturnEvent() {
+        String eventId = "1";
+        Event mockEvent = new Event();
+        mockEvent.setId(eventId);
+        mockEvent.setEventName("Event 1");
+
+        when(eventService.getEventById(eventId)).thenReturn(mockEvent);
+
+        ResponseEntity<Event> response = eventController.getEventById(eventId);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(mockEvent, response.getBody());
+        verify(eventService, times(1)).getEventById(eventId);
+    }
+
+
 }
