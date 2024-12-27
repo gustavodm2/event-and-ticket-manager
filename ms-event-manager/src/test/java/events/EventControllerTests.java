@@ -103,5 +103,21 @@ public class EventControllerTests {
         verify(eventService, times(1)).updateEvent(updateEventDTO, eventId);
     }
 
+    @Test
+    void deleteEvent_ShouldReturnDeletedEvent() {
+        String eventId = "1";
+        Event deletedEvent = new Event();
+        deletedEvent.setId(eventId);
+        deletedEvent.setEventName("Deleted Event");
+
+        when(eventService.deleteEvent(eventId)).thenReturn(deletedEvent);
+
+        ResponseEntity<Event> response = eventController.deleteEvent(eventId);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(deletedEvent, response.getBody());
+        verify(eventService, times(1)).deleteEvent(eventId);
+    }
+
 
 }
