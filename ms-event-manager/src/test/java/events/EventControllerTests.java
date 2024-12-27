@@ -46,4 +46,25 @@ public class EventControllerTests {
         assertEquals(mockEvent, response.getBody());
         verify(eventService, times(1)).createEvent(createEventDTO);
     }
+
+    @Test
+    void getAllEvents_ShouldReturnListOfEvents() {
+        Event event1 = new Event();
+        event1.setId("1");
+        event1.setEventName("Test Event 1");
+
+        Event event2 = new Event();
+        event2.setId("2");
+        event2.setEventName("Test Event 2");
+
+        List<Event> mockEvents = Arrays.asList(event1, event2);
+
+        when(eventService.getAllEvents()).thenReturn(mockEvents);
+
+        ResponseEntity<List<Event>> response = eventController.getAllEvents();
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(mockEvents, response.getBody());
+        verify(eventService, times(1)).getAllEvents();
+    }
 }
