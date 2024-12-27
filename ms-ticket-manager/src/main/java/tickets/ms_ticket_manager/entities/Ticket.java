@@ -7,10 +7,6 @@ import tickets.ms_ticket_manager.entities.DTOs.EventDTO;
 
 @Document(collection = "db_ticket")
 @Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Ticket {
 
     @Id
@@ -22,5 +18,6 @@ public class Ticket {
     private String BRLAmount;
     private String USDAmount;
     private String status;
+
 
 }
