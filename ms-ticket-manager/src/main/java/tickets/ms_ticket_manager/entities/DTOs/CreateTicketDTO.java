@@ -13,7 +13,6 @@ public class CreateTicketDTO {
     private String cpf;
     private String customerMail;
     private String eventId;
-    private String eventName;
     private String BRLAmount;
     private String USDAmount;
     private String status;
