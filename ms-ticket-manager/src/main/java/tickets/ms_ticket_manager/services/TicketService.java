@@ -1,5 +1,6 @@
 package tickets.ms_ticket_manager.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tickets.ms_ticket_manager.entities.DTOs.CreateTicketDTO;
@@ -28,6 +29,9 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-
+    public Ticket getTicketById(String id){
+        return ticketRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ticket not found with id " + id));
+    }
 
 }
