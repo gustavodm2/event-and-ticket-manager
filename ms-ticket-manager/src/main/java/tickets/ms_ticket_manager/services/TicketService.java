@@ -49,5 +49,14 @@ public class TicketService {
 
     }
 
+    public Ticket deleteTicket(String id){
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ticket not found with id " + id));
+
+        ticket.setDeleted(true);
+
+        return ticketRepository.save(ticket);
+    }
+
 
 }

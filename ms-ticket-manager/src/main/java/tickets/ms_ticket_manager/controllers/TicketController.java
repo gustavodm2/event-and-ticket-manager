@@ -16,6 +16,8 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+    private String id;
+    private UpdateTicketDTO dto;
 
     @PostMapping
     public ResponseEntity<Ticket> createTicket(@RequestBody CreateTicketDTO createTicketDTO){
@@ -44,8 +46,13 @@ public class TicketController {
         Ticket updatedTicket = ticketService.updateTicket(dto, id);
 
         return ResponseEntity.ok(updatedTicket);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Ticket> deleteTicket(@PathVariable String id){
+        Ticket deletedTicket = ticketService.deleteTicket(id);
 
+        return ResponseEntity.ok(deletedTicket);
     }
 
 
