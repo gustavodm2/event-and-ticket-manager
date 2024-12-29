@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tickets.ms_ticket_manager.entities.DTOs.CreateTicketDTO;
+import tickets.ms_ticket_manager.entities.DTOs.UpdateTicketDTO;
 import tickets.ms_ticket_manager.entities.Ticket;
 import tickets.ms_ticket_manager.services.TicketService;
 
@@ -36,6 +37,15 @@ public class TicketController {
         Ticket ticket = ticketService.getTicketById(id);
 
         return ResponseEntity.ok(ticket);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Ticket> updateTicket(@PathVariable String id, @RequestBody UpdateTicketDTO dto){
+        Ticket updatedTicket = ticketService.updateTicket(dto, id);
+
+        return ResponseEntity.ok(updatedTicket);
+
+
     }
 
 
