@@ -7,6 +7,8 @@ import tickets.ms_ticket_manager.entities.Ticket;
 import tickets.ms_ticket_manager.mappers.CreateTicketMap;
 import tickets.ms_ticket_manager.repositories.TicketRepository;
 
+import java.util.List;
+
 @Service
 public class TicketService {
 
@@ -21,6 +23,11 @@ public class TicketService {
 
         return ticketRepository.save(ticket);
     }
+
+    public List<Ticket> getAllTickets(){
+        return ticketRepository.findAll();
+    }
+
 
 
 }

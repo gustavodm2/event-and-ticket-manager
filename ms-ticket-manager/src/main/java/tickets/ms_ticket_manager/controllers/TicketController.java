@@ -2,13 +2,12 @@ package tickets.ms_ticket_manager.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tickets.ms_ticket_manager.entities.DTOs.CreateTicketDTO;
 import tickets.ms_ticket_manager.entities.Ticket;
 import tickets.ms_ticket_manager.services.TicketService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/tickets")
@@ -24,6 +23,14 @@ public class TicketController {
         return ResponseEntity.ok(createdTicket);
 
 
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<Ticket>> getAllTickets(){
+        List<Ticket> Tickets = ticketService.getAllTickets();
+
+        return ResponseEntity.ok(Tickets);
     }
 
 
