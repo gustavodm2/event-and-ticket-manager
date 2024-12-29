@@ -19,5 +19,8 @@ public class Ticket {
     private String USDAmount;
     private String status;
 
+    private boolean isDeleted;
+
+
 
 }
