@@ -8,6 +8,7 @@ import tickets.ms_ticket_manager.entities.DTOs.UpdateTicketDTO;
 import tickets.ms_ticket_manager.entities.Ticket;
 import tickets.ms_ticket_manager.mappers.CreateTicketMap;
 import tickets.ms_ticket_manager.mappers.UpdateTicketMap;
+import tickets.ms_ticket_manager.producers.TicketProducer;
 import tickets.ms_ticket_manager.repositories.TicketRepository;
 
 import java.util.List;
@@ -24,8 +25,15 @@ public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
 
+    @Autowired
+    private TicketProducer ticketProducer;
+
     public Ticket createTicket(CreateTicketDTO createTicketDTO){
+
+
         Ticket ticket = createTicketMap.toEntity(createTicketDTO);
+
+        ticketProducer.publishMessageEmail(ticket);
 
         return ticketRepository.save(ticket);
     }
