@@ -2,6 +2,8 @@ package tickets.ms_ticket_manager.entities.DTOs;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 public class EventDTO {
 
