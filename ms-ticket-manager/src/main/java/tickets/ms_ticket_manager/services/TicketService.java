@@ -3,6 +3,7 @@ package tickets.ms_ticket_manager.services;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tickets.ms_ticket_manager.clients.EventClient;
 import tickets.ms_ticket_manager.entities.DTOs.CreateTicketDTO;
 import tickets.ms_ticket_manager.entities.DTOs.EventDTO;
 import tickets.ms_ticket_manager.entities.DTOs.UpdateTicketDTO;
@@ -29,6 +30,9 @@ public class TicketService {
     @Autowired
     private TicketProducer ticketProducer;
 
+    @Autowired
+    private EventClient eventClient;
+
     public Ticket createTicket(CreateTicketDTO createTicketDTO){
 
 
@@ -44,7 +48,10 @@ public class TicketService {
     }
 
     public List<Ticket> getTicketsByEventId(String eventId) {
-        List<Ticket> tickets = ticketRepository.findByEventId(eventId);
+
+        EventDTO eventDTO = eventClient.getEventById(eventId);
+
+        List<Ticket> tickets = ticketRepository.findByEventId(eventDTO.getId());
 
         if (tickets.isEmpty()) {
             throw new EntityNotFoundException("No tickets found for event with ID " + eventId);
