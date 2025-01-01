@@ -11,7 +11,7 @@ import tickets.ms_ticket_manager.services.TicketService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tickets")
+@RequestMapping
 public class TicketController {
 
     @Autowired
@@ -19,7 +19,7 @@ public class TicketController {
     private String id;
     private UpdateTicketDTO dto;
 
-    @PostMapping
+    @PostMapping("/create-ticket")
     public ResponseEntity<Ticket> createTicket(@RequestBody CreateTicketDTO createTicketDTO){
         Ticket createdTicket = ticketService.createTicket(createTicketDTO);
 
@@ -27,28 +27,35 @@ public class TicketController {
     }
 
 
-    @GetMapping
+    @GetMapping("/get-all-tickets")
     public ResponseEntity<List<Ticket>> getAllTickets(){
         List<Ticket> tickets = ticketService.getAllTickets();
 
         return ResponseEntity.ok(tickets);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/check-tickets-by-event/{eventId}")
+    public ResponseEntity<List<Ticket>> getTicketsByEventId(@PathVariable String eventId){
+        List<Ticket> tickets = ticketService.getTicketsByEventId(eventId);
+
+        return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("/get-ticket/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable String id){
         Ticket ticket = ticketService.getTicketById(id);
 
         return ResponseEntity.ok(ticket);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update-ticket/{id}")
     public ResponseEntity<Ticket> updateTicket(@PathVariable String id, @RequestBody UpdateTicketDTO dto){
         Ticket updatedTicket = ticketService.updateTicket(dto, id);
 
         return ResponseEntity.ok(updatedTicket);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/cancel-ticket/{id}")
     public ResponseEntity<Ticket> deleteTicket(@PathVariable String id){
         Ticket deletedTicket = ticketService.deleteTicket(id);
 
