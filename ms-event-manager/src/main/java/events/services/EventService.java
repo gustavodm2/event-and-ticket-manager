@@ -1,13 +1,18 @@
 package events.services;
 
+import events.clients.TicketClient;
 import events.entities.Address;
+import events.entities.DTOs.CheckResponse;
 import events.entities.DTOs.CreateEventDTO;
+import events.entities.DTOs.TicketDTO;
 import events.entities.DTOs.UpdateEventDTO;
 import events.entities.Event;
 import events.mapper.CreateEventMapper;
 import events.mapper.UpdateEventMapper;
 import events.repositories.EventRepository;
+import feign.FeignException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +22,22 @@ import java.util.Optional;
 @Service
 public class EventService {
 
-    private final EventRepository eventRepository;
-    private final CepService cepService;
-    private final CreateEventMapper createEventMapper;
-    private final UpdateEventMapper updateEventMapper;
+    @Autowired
+    private EventRepository eventRepository;
 
-    public EventService(EventRepository eventRepository, CepService cepService, CreateEventMapper createEventMapper, UpdateEventMapper updateEventMapper) {
-        this.eventRepository = eventRepository;
-        this.cepService = cepService;
-        this.createEventMapper = createEventMapper;
-        this.updateEventMapper = updateEventMapper;
-    }
+    @Autowired
+    private CepService cepService;
+
+    @Autowired
+    private CreateEventMapper createEventMapper;
+
+    @Autowired
+    private UpdateEventMapper updateEventMapper;
+
+    @Autowired
+    private TicketClient ticketClient;
+
+
 
     public Event createEvent(CreateEventDTO dto) {
         Event event = createEventMapper.toEntity(dto);
@@ -62,12 +72,18 @@ public class EventService {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + id));
 
+        List<TicketDTO> tickets = ticketClient.getTicketsByEventId(event.getId());
+
+        boolean hasActiveTickets = tickets.stream()
+                .anyMatch(ticket -> !"INACTIVE".equalsIgnoreCase(ticket.getStatus()));
+
+        if (hasActiveTickets) {
+            throw new IllegalStateException("Cannot delete event with active tickets");
+        }
+
         event.setDeleted(true);
-
-        eventRepository.save(event);
-
-        return event;
-
+        return eventRepository.save(event);
     }
+
 
 }

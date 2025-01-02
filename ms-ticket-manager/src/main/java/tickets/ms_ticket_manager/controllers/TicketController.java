@@ -3,6 +3,7 @@ package tickets.ms_ticket_manager.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tickets.ms_ticket_manager.entities.DTOs.CheckTicketByEventResponse;
 import tickets.ms_ticket_manager.entities.DTOs.CreateTicketDTO;
 import tickets.ms_ticket_manager.entities.DTOs.UpdateTicketDTO;
 import tickets.ms_ticket_manager.entities.Ticket;
@@ -35,6 +36,13 @@ public class TicketController {
     }
 
     @GetMapping("/check-tickets-by-event/{eventId}")
+    public ResponseEntity<CheckTicketByEventResponse> getTicketsByEventResponse(@PathVariable String eventId){
+        CheckTicketByEventResponse checkTicketByEventResponse = ticketService.getTicketsByEventResponse(eventId);
+
+        return ResponseEntity.ok(checkTicketByEventResponse);
+    }
+
+    @GetMapping("/get-tickets-by-event/{eventId}")
     public ResponseEntity<List<Ticket>> getTicketsByEventId(@PathVariable String eventId){
         List<Ticket> tickets = ticketService.getTicketsByEventId(eventId);
 

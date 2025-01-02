@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import feign.FeignException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,6 +16,16 @@ public class GlobalExceptionHandler {
 
     private String getCurrentTimestamp() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<ErrorResponse> handleFeignException(FeignException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                "Error while communicating with the ticket service: " + ex.getMessage(),
+                ex.status(),
+                getCurrentTimestamp()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.status()));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

@@ -12,5 +12,7 @@ public class EventDTO {
     private String dateTime;
     private AddressDTO cep;
 
+    private boolean isDeleted;
+
 
 }
