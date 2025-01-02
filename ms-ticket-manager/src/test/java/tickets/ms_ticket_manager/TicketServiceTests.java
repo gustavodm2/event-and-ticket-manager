@@ -73,5 +73,23 @@ public class TicketServiceTests {
         assertEquals(tickets, result);
     }
 
+    @Test
+    void testGetTicketsByEventResponse() {
+        String eventId = "1";
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setId(eventId);
+        List<Ticket> tickets = Arrays.asList(new Ticket());
+
+        when(eventClient.getEventById(eventId)).thenReturn(eventDTO);
+        when(ticketRepository.findByEventId(eventId)).thenReturn(tickets);
+
+        CheckTicketByEventResponse response = ticketService.getTicketsByEventResponse(eventId);
+
+        assertNotNull(response);
+        assertTrue(response.isHasTickets());
+        verify(eventClient, times(1)).getEventById(eventId);
+        verify(ticketRepository, times(1)).findByEventId(eventId);
+    }
+
 
 }
