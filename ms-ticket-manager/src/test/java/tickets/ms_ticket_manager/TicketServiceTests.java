@@ -18,6 +18,7 @@ import tickets.ms_ticket_manager.services.TicketService;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -198,6 +199,16 @@ public class TicketServiceTests {
 
         verify(ticketRepository, times(1)).findTicketsByCpf(cpf);
         assertEquals(tickets, result);
+    }
+
+    @Test
+    void testGetTicketByCpfNotFound() {
+        String cpf = "123456789";
+
+        when(ticketRepository.findTicketsByCpf(cpf)).thenReturn(Collections.emptyList());
+
+        assertThrows(EntityNotFoundException.class, () -> ticketService.getTicketByCpf(cpf));
+        verify(ticketRepository, times(1)).findTicketsByCpf(cpf);
     }
 
 
