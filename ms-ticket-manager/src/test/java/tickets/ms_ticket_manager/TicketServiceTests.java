@@ -211,5 +211,21 @@ public class TicketServiceTests {
         verify(ticketRepository, times(1)).findTicketsByCpf(cpf);
     }
 
+    @Test
+    void testDeleteTicketByCpf() {
+        String cpf = "123456789";
+        List<Ticket> tickets = Arrays.asList(new Ticket(), new Ticket());
+
+        when(ticketRepository.findTicketsByCpf(cpf)).thenReturn(tickets);
+        when(ticketRepository.saveAll(tickets)).thenReturn(tickets);
+
+        List<Ticket> result = ticketService.deleteTicketByCpf(cpf);
+
+        verify(ticketRepository, times(1)).findTicketsByCpf(cpf);
+        verify(ticketRepository, times(1)).saveAll(tickets);
+        tickets.forEach(ticket -> assertEquals("INACTIVE", ticket.getStatus()));
+        assertEquals(tickets, result);
+    }
+
 
 }
