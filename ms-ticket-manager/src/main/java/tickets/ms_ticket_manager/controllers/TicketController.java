@@ -56,6 +56,13 @@ public class TicketController {
         return ResponseEntity.ok(ticket);
     }
 
+    @GetMapping("/get-ticket-by-cpf/{cpf}")
+    public ResponseEntity<List<Ticket>> getTicketsByCpf(@PathVariable String cpf){
+        List<Ticket> tickets = ticketService.getTicketByCpf(cpf);
+
+        return ResponseEntity.ok(tickets);
+    }
+
     @PutMapping("/update-ticket/{id}")
     public ResponseEntity<Ticket> updateTicket(@PathVariable String id, @RequestBody UpdateTicketDTO dto){
         Ticket updatedTicket = ticketService.updateTicket(dto, id);
