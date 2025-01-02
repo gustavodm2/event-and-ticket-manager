@@ -91,5 +91,22 @@ public class TicketServiceTests {
         verify(ticketRepository, times(1)).findByEventId(eventId);
     }
 
+    @Test
+    void testGetTicketsByEventId() {
+        String eventId = "1";
+        EventDTO eventDTO = new EventDTO();
+        eventDTO.setId(eventId);
+        List<Ticket> tickets = Arrays.asList(new Ticket());
+
+        when(eventClient.getEventById(eventId)).thenReturn(eventDTO);
+        when(ticketRepository.findByEventId(eventId)).thenReturn(tickets);
+
+        List<Ticket> result = ticketService.getTicketsByEventId(eventId);
+
+        verify(eventClient, times(1)).getEventById(eventId);
+        verify(ticketRepository, times(1)).findByEventId(eventId);
+        assertEquals(tickets, result);
+    }
+
 
 }
