@@ -177,4 +177,14 @@ public class TicketServiceTests {
         assertEquals(ticket, result);
     }
 
+    @Test
+    void testDeleteTicketNotFound() {
+        String id = "1";
+
+        when(ticketRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> ticketService.deleteTicket(id));
+        verify(ticketRepository, times(1)).findById(id);
+    }
+
 }
