@@ -42,7 +42,7 @@ public class EventServiceTests {
     @InjectMocks
     private EventService eventService;
 
-    @InjectMocks
+    @Mock
     private TicketClient ticketClient;
 
     @BeforeEach
@@ -183,10 +183,14 @@ public class EventServiceTests {
     @Test
     void deleteEvent_ShouldThrowIfEventDoesNotExist() {
         String id = "123";
+
         when(eventRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class, () -> eventService.deleteEvent(id));
+
         verify(eventRepository, times(1)).findById(id);
+        verify(ticketClient, never()).getTicketsByEventId(any());
+        verify(eventRepository, never()).save(any());
     }
 
 
