@@ -144,5 +144,19 @@ public class TicketControllerTests {
         assertEquals(200, response.getStatusCodeValue());
     }
 
+    @Test
+    void testDeleteTicketByCpf() {
+        String cpf = "123456789";
+        List<Ticket> tickets = Arrays.asList(new Ticket(), new Ticket());
+
+        when(ticketService.deleteTicketByCpf(cpf)).thenReturn(tickets);
+
+        ResponseEntity<List<Ticket>> response = ticketController.deleteTicketByCpf(cpf);
+
+        verify(ticketService, times(1)).deleteTicketByCpf(cpf);
+        assertEquals(tickets, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+    }
+
 
 }
