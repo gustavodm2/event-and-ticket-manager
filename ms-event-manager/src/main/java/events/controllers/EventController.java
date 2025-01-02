@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping
 public class EventController {
 
     private final EventService eventService;
@@ -21,39 +21,39 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @PostMapping
+    @PostMapping("/create-event")
     public ResponseEntity<Event> createEvent(@RequestBody CreateEventDTO event) {
         Event createdEvent = eventService.createEvent(event);
 
         return ResponseEntity.ok(createdEvent);
     }
 
-    @GetMapping
+    @GetMapping("/get-all-events")
     public ResponseEntity<List<Event>> getAllEvents(){
         List<Event> events = eventService.getAllEvents();
         return ResponseEntity.ok(events);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get-event/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable String id){
         Event event = eventService.getEventById(id);
         return ResponseEntity.ok(event);
     }
 
-    @GetMapping("/sorted")
+    @GetMapping("/get-all-events/sorted")
     public ResponseEntity<List<Event>> getAllEventsSorted() {
         List<Event> events = eventService.getAllEventsSortedByName();
         return ResponseEntity.ok(events);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update-event/{id}")
     public ResponseEntity<Event> updateEvent(@PathVariable String id, @RequestBody UpdateEventDTO event){
         Event updatedEvent = eventService.updateEvent(event, id);
 
         return ResponseEntity.ok(updatedEvent);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete-event/{id}")
     public ResponseEntity<Event> deleteEvent(@PathVariable String id) {
         Event deletedEvent = eventService.deleteEvent(id);
         return ResponseEntity.ok(deletedEvent);
