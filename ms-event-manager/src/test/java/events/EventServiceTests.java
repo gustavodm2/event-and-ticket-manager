@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Sort;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,6 +90,29 @@ public class EventServiceTests {
         assertThrows(EntityNotFoundException.class, () -> eventService.getEventById(id));
         verify(eventRepository, times(1)).findById(id);
     }
+
+    @Test
+    void getAllEventsSortedByName_ShouldReturnSortedEvents() {
+        Event event1 = new Event();
+        event1.setId("2");
+        event1.setEventName("a");
+
+        Event event2 = new Event();
+        event2.setId("1");
+        event2.setEventName("b");
+
+        List<Event> sortedEvents = Arrays.asList(event1, event2);
+
+        when(eventRepository.findAll(Sort.by(Sort.Order.asc("eventName")))).thenReturn(sortedEvents);
+
+        List<Event> result = eventService.getAllEventsSortedByName();
+
+        assertEquals(2, result.size());
+        assertEquals("a", result.get(0).getEventName());
+        assertEquals("b", result.get(1).getEventName());
+        verify(eventRepository, times(1)).findAll(Sort.by(Sort.Order.asc("eventName")));
+    }
+
 
     @Test
     void updateEvent_ShouldUpdateAndSaveEvent() {
