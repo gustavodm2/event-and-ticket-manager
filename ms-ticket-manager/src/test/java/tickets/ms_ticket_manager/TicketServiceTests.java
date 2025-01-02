@@ -187,4 +187,18 @@ public class TicketServiceTests {
         verify(ticketRepository, times(1)).findById(id);
     }
 
+    @Test
+    void testGetTicketByCpf() {
+        String cpf = "123456789";
+        List<Ticket> tickets = Arrays.asList(new Ticket());
+
+        when(ticketRepository.findTicketsByCpf(cpf)).thenReturn(tickets);
+
+        List<Ticket> result = ticketService.getTicketByCpf(cpf);
+
+        verify(ticketRepository, times(1)).findTicketsByCpf(cpf);
+        assertEquals(tickets, result);
+    }
+
+
 }
