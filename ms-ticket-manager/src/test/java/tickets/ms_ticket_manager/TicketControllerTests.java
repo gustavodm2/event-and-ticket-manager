@@ -59,4 +59,18 @@ public class TicketControllerTests {
         assertEquals(200, response.getStatusCodeValue());
     }
 
+    @Test
+    void testGetTicketsByEventResponse() {
+        String eventId = "1";
+        CheckTicketByEventResponse checkTicketByEventResponse = new CheckTicketByEventResponse();
+
+        when(ticketService.getTicketsByEventResponse(eventId)).thenReturn(checkTicketByEventResponse);
+
+        ResponseEntity<CheckTicketByEventResponse> response = ticketController.getTicketsByEventResponse(eventId);
+
+        verify(ticketService, times(1)).getTicketsByEventResponse(eventId);
+        assertEquals(checkTicketByEventResponse, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+    }
+
 }
