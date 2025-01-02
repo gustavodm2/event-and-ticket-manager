@@ -134,5 +134,21 @@ public class TicketServiceTests {
     }
 
 
+    @Test
+    void testUpdateTicket() {
+        String id = "1";
+        UpdateTicketDTO dto = new UpdateTicketDTO();
+        Ticket ticket = new Ticket();
+
+        when(ticketRepository.findById(id)).thenReturn(Optional.of(ticket));
+        when(ticketRepository.save(ticket)).thenReturn(ticket);
+
+        Ticket result = ticketService.updateTicket(dto, id);
+
+        verify(updateTicketMap, times(1)).toEntity(dto, ticket);
+        verify(ticketRepository, times(1)).save(ticket);
+        assertEquals(ticket, result);
+    }
+
 
 }
