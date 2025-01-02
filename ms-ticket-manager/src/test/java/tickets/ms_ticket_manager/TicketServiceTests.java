@@ -227,5 +227,15 @@ public class TicketServiceTests {
         assertEquals(tickets, result);
     }
 
+    @Test
+    void testDeleteTicketByCpfNotFound() {
+        String cpf = "123456789";
+
+        when(ticketRepository.findTicketsByCpf(cpf)).thenReturn(Collections.emptyList());
+
+        assertThrows(EntityNotFoundException.class, () -> ticketService.deleteTicketByCpf(cpf));
+        verify(ticketRepository, times(1)).findTicketsByCpf(cpf);
+    }
+
 
 }
