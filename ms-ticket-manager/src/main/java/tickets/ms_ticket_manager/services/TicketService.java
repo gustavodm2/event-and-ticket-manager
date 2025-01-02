@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tickets.ms_ticket_manager.clients.EventClient;
+import tickets.ms_ticket_manager.entities.DTOs.CheckTicketByEventResponse;
 import tickets.ms_ticket_manager.entities.DTOs.CreateTicketDTO;
 import tickets.ms_ticket_manager.entities.DTOs.EventDTO;
 import tickets.ms_ticket_manager.entities.DTOs.UpdateTicketDTO;
@@ -47,18 +48,34 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-    public List<Ticket> getTicketsByEventId(String eventId) {
+    public CheckTicketByEventResponse getTicketsByEventResponse(String eventId) {
+        EventDTO eventDTO = eventClient.getEventById(eventId);
+        List<Ticket> tickets = ticketRepository.findByEventId(eventDTO.getId());
+
+        CheckTicketByEventResponse checkTicketByEventResponse = new CheckTicketByEventResponse();
+        checkTicketByEventResponse.setEventId(eventDTO.getId());
+
+        boolean hasActiveTickets = tickets.stream()
+                .anyMatch(ticket -> !"INACTIVE".equalsIgnoreCase(ticket.getStatus()));
+
+        if (tickets.isEmpty() || !hasActiveTickets) {
+            checkTicketByEventResponse.setHasTickets(false);
+        } else {
+            checkTicketByEventResponse.setHasTickets(true);
+        }
+
+        return checkTicketByEventResponse;
+    }
+
+
+    public List<Ticket> getTicketsByEventId(String eventId){
 
         EventDTO eventDTO = eventClient.getEventById(eventId);
 
-        List<Ticket> tickets = ticketRepository.findByEventId(eventDTO.getId());
-
-        if (tickets.isEmpty()) {
-            throw new EntityNotFoundException("No tickets found for event with ID " + eventId);
-        }
-
-        return tickets;
+        return ticketRepository.findByEventId(eventDTO.getId());
     }
+
+
 
     public Ticket getTicketById(String id){
         return ticketRepository.findById(id)
@@ -79,7 +96,7 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Ticket not found with id " + id));
 
-        ticket.setDeleted(true);
+        ticket.setStatus("INACTIVE");
 
         return ticketRepository.save(ticket);
     }
