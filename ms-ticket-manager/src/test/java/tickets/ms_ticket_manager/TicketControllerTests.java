@@ -87,4 +87,19 @@ public class TicketControllerTests {
         assertEquals(200, response.getStatusCodeValue());
     }
 
+    @Test
+    void testGetTicketById() {
+        String id = "1";
+        Ticket ticket = new Ticket();
+
+        when(ticketService.getTicketById(id)).thenReturn(ticket);
+
+        ResponseEntity<Ticket> response = ticketController.getTicketById(id);
+
+        verify(ticketService, times(1)).getTicketById(id);
+        assertEquals(ticket, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+    }
+
+
 }
