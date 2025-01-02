@@ -16,6 +16,9 @@ import tickets.ms_ticket_manager.repositories.TicketRepository;
 import tickets.ms_ticket_manager.services.TicketService;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -57,6 +60,17 @@ public class TicketServiceTests {
         verify(ticketProducer, times(1)).publishMessageEmail(ticket);
         verify(ticketRepository, times(1)).save(ticket);
         assertEquals(ticket, result);
+    }
+
+    @Test
+    void testGetAllTickets() {
+        List<Ticket> tickets = Arrays.asList(new Ticket(), new Ticket());
+        when(ticketRepository.findAll()).thenReturn(tickets);
+
+        List<Ticket> result = ticketService.getAllTickets();
+
+        verify(ticketRepository, times(1)).findAll();
+        assertEquals(tickets, result);
     }
 
 
