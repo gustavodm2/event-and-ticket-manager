@@ -2,6 +2,7 @@ package events.services;
 
 import events.clients.TicketClient;
 import events.entities.Address;
+import events.entities.DTOs.CheckResponse;
 import events.entities.DTOs.CreateEventDTO;
 import events.entities.DTOs.TicketDTO;
 import events.entities.DTOs.UpdateEventDTO;
@@ -9,6 +10,7 @@ import events.entities.Event;
 import events.mapper.CreateEventMapper;
 import events.mapper.UpdateEventMapper;
 import events.repositories.EventRepository;
+import feign.FeignException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -67,19 +69,21 @@ public class EventService {
     }
 
     public Event deleteEvent(String id) {
-
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found with id " + id));
 
-        List<TicketDTO> tickets = ticketClient.getTicketsById(event.getId());
+        List<TicketDTO> tickets = ticketClient.getTicketsByEventId(event.getId());
 
-        if (!tickets.isEmpty()) {
-            throw new IllegalStateException("Cannot delete event with associated tickets");
+        boolean hasActiveTickets = tickets.stream()
+                .anyMatch(ticket -> !"INACTIVE".equalsIgnoreCase(ticket.getStatus()));
+
+        if (hasActiveTickets) {
+            throw new IllegalStateException("Cannot delete event with active tickets");
         }
 
         event.setDeleted(true);
         return eventRepository.save(event);
-
     }
+
 
 }

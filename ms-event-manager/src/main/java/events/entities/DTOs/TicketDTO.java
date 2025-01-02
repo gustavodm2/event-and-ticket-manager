@@ -1,11 +1,11 @@
 package events.entities.DTOs;
 
 import events.entities.Event;
-import org.springframework.data.annotation.Id;
+import lombok.Data;
 
+@Data
 public class TicketDTO {
 
-    @Id
     private String ticketId;
     private String customerName;
     private String cpf;
@@ -16,5 +16,6 @@ public class TicketDTO {
     private String status;
 
     private boolean isDeleted;
+
 
 }
