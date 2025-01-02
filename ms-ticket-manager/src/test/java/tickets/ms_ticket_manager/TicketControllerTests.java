@@ -130,5 +130,19 @@ public class TicketControllerTests {
         assertEquals(200, response.getStatusCodeValue());
     }
 
+    @Test
+    void testDeleteTicket() {
+        String id = "1";
+        Ticket ticket = new Ticket();
+
+        when(ticketService.deleteTicket(id)).thenReturn(ticket);
+
+        ResponseEntity<Ticket> response = ticketController.deleteTicket(id);
+
+        verify(ticketService, times(1)).deleteTicket(id);
+        assertEquals(ticket, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+    }
+
 
 }
