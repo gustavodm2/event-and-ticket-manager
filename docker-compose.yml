@@ -1,0 +1,48 @@
+services:
+  ms-event-management:
+    build:
+      context: .\ms-event-manager
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:admin@desafio3.ki7aa.mongodb.net/db_event?retryWrites=true&w=majority&appName=Desafio3
+    depends_on:
+      - db_event
+
+  ms-ticket-management:
+    build:
+      context: .\ms-ticket-manager
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:admin@desafio3.ki7aa.mongodb.net/db_ticket?retryWrites=true&w=majority&appName=Desafio3
+    depends_on:
+      - db_ticket
+
+  db_event:
+    image: mongo:5.0
+    container_name: db_event
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - db_event_data:/data/db
+
+  db_ticket:
+    image: mongo:5.0
+    container_name: db_ticket
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - db_ticket_data:/data/db
+
+volumes:
+  db_event_data:
+  db_ticket_data:
