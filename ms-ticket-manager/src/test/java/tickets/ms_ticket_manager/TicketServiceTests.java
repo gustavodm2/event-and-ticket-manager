@@ -18,6 +18,7 @@ import tickets.ms_ticket_manager.services.TicketService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -106,6 +107,19 @@ public class TicketServiceTests {
         verify(eventClient, times(1)).getEventById(eventId);
         verify(ticketRepository, times(1)).findByEventId(eventId);
         assertEquals(tickets, result);
+    }
+
+    @Test
+    void testGetTicketById() {
+        String id = "1";
+        Ticket ticket = new Ticket();
+
+        when(ticketRepository.findById(id)).thenReturn(Optional.of(ticket));
+
+        Ticket result = ticketService.getTicketById(id);
+
+        verify(ticketRepository, times(1)).findById(id);
+        assertEquals(ticket, result);
     }
 
 
