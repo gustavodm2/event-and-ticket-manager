@@ -150,5 +150,16 @@ public class TicketServiceTests {
         assertEquals(ticket, result);
     }
 
+    @Test
+    void testUpdateTicketNotFound() {
+        String id = "1";
+        UpdateTicketDTO dto = new UpdateTicketDTO();
+
+        when(ticketRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> ticketService.updateTicket(dto, id));
+        verify(ticketRepository, times(1)).findById(id);
+    }
+
 
 }
