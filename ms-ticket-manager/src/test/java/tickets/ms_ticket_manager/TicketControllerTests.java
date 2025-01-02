@@ -101,5 +101,19 @@ public class TicketControllerTests {
         assertEquals(200, response.getStatusCodeValue());
     }
 
+    @Test
+    void testGetTicketsByCpf() {
+        String cpf = "123456789";
+        List<Ticket> tickets = Arrays.asList(new Ticket());
+
+        when(ticketService.getTicketByCpf(cpf)).thenReturn(tickets);
+
+        ResponseEntity<List<Ticket>> response = ticketController.getTicketsByCpf(cpf);
+
+        verify(ticketService, times(1)).getTicketByCpf(cpf);
+        assertEquals(tickets, response.getBody());
+        assertEquals(200, response.getStatusCodeValue());
+    }
+
 
 }
