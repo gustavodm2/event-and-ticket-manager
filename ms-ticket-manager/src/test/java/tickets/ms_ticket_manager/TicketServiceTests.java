@@ -161,5 +161,20 @@ public class TicketServiceTests {
         verify(ticketRepository, times(1)).findById(id);
     }
 
+    @Test
+    void testDeleteTicket() {
+        String id = "1";
+        Ticket ticket = new Ticket();
+
+        when(ticketRepository.findById(id)).thenReturn(Optional.of(ticket));
+        when(ticketRepository.save(ticket)).thenReturn(ticket);
+
+        Ticket result = ticketService.deleteTicket(id);
+
+        verify(ticketRepository, times(1)).findById(id);
+        verify(ticketRepository, times(1)).save(ticket);
+        assertEquals("INACTIVE", ticket.getStatus());
+        assertEquals(ticket, result);
+    }
 
 }
