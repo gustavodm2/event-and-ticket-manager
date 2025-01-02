@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import tickets.ms_ticket_manager.entities.DTOs.EventDTO;
 
-@Document(collection = "db_ticket")
+@Document(collection = "tickets")
 @Data
 public class Ticket {
 
