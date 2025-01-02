@@ -1,6 +1,8 @@
 package events;
 
+import events.clients.TicketClient;
 import events.entities.DTOs.CreateEventDTO;
+import events.entities.DTOs.TicketDTO;
 import events.entities.DTOs.UpdateEventDTO;
 import events.entities.Event;
 import events.mapper.CreateEventMapper;
@@ -39,6 +41,9 @@ public class EventServiceTests {
 
     @InjectMocks
     private EventService eventService;
+
+    @InjectMocks
+    private TicketClient ticketClient;
 
     @BeforeEach
     void setUp() {
@@ -131,10 +136,39 @@ public class EventServiceTests {
         verify(eventRepository, times(1)).save(event);
     }
     @Test
-    void deleteEvent_ShouldMarkEventAsDeleted() {
+    void deleteEvent_ShouldThrowIfEventHasActiveTickets() {
         String id = "123";
         Event event = new Event();
+        event.setId(id);
+
+        TicketDTO activeTicket = new TicketDTO();
+        activeTicket.setStatus("ACTIVE");
+
+        List<TicketDTO> tickets = List.of(activeTicket);
+
         when(eventRepository.findById(id)).thenReturn(Optional.of(event));
+        when(ticketClient.getTicketsByEventId(id)).thenReturn(tickets);
+
+        assertThrows(IllegalStateException.class, () -> eventService.deleteEvent(id));
+
+        verify(eventRepository, times(1)).findById(id);
+        verify(ticketClient, times(1)).getTicketsByEventId(id);
+        verify(eventRepository, never()).save(any());
+    }
+
+    @Test
+    void deleteEvent_ShouldMarkEventAsDeletedIfAllTicketsAreInactive() {
+        String id = "123";
+        Event event = new Event();
+        event.setId(id);
+
+        TicketDTO inactiveTicket = new TicketDTO();
+        inactiveTicket.setStatus("INACTIVE");
+
+        List<TicketDTO> tickets = List.of(inactiveTicket);
+
+        when(eventRepository.findById(id)).thenReturn(Optional.of(event));
+        when(ticketClient.getTicketsByEventId(id)).thenReturn(tickets);
         when(eventRepository.save(event)).thenReturn(event);
 
         Event deletedEvent = eventService.deleteEvent(id);
@@ -142,6 +176,7 @@ public class EventServiceTests {
         assertNotNull(deletedEvent);
         assertTrue(deletedEvent.isDeleted());
         verify(eventRepository, times(1)).findById(id);
+        verify(ticketClient, times(1)).getTicketsByEventId(id);
         verify(eventRepository, times(1)).save(event);
     }
 
