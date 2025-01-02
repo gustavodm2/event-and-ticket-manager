@@ -111,5 +111,18 @@ public class TicketService {
         return tickets;
     }
 
+    public List<Ticket> deleteTicketByCpf(String cpf) {
+        List<Ticket> tickets = ticketRepository.findTicketsByCpf(cpf);
+
+        if (tickets.isEmpty()) {
+            throw new EntityNotFoundException("No tickets found for CPF: " + cpf);
+        }
+
+        tickets.forEach(ticket -> ticket.setStatus("INACTIVE"));
+
+        return ticketRepository.saveAll(tickets);
+    }
+
+
 
 }

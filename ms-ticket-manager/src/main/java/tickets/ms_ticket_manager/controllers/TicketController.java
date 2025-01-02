@@ -1,5 +1,6 @@
 package tickets.ms_ticket_manager.controllers;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +76,13 @@ public class TicketController {
         Ticket deletedTicket = ticketService.deleteTicket(id);
 
         return ResponseEntity.ok(deletedTicket);
+    }
+
+    @DeleteMapping("/cancel-ticket-by-cpf/{cpf}")
+    public ResponseEntity<List<Ticket>> deleteTicketByCpf(@PathVariable String cpf){
+        List<Ticket> deletedTickets = ticketService.deleteTicketByCpf(cpf);
+
+        return ResponseEntity.ok(deletedTickets);
     }
 
 
