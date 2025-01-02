@@ -1,6 +1,7 @@
 package tickets.ms_ticket_manager;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -121,6 +122,17 @@ public class TicketServiceTests {
         verify(ticketRepository, times(1)).findById(id);
         assertEquals(ticket, result);
     }
+
+    @Test
+    void testGetTicketByIdNotFound() {
+        String id = "1";
+
+        when(ticketRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> ticketService.getTicketById(id));
+        verify(ticketRepository, times(1)).findById(id);
+    }
+
 
 
 }
