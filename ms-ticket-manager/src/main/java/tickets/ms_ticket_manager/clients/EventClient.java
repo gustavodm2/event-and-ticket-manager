@@ -8,7 +8,7 @@ import tickets.ms_ticket_manager.entities.DTOs.EventDTO;
 @FeignClient(name = "ms-event-manager", url = "http://localhost:8080/")
 public interface EventClient {
 
-    @GetMapping("/events/{id}")
+    @GetMapping("/get-event/{id}")
     EventDTO getEventById(@PathVariable String id);
 
 }
