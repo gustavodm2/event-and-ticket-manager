@@ -18,6 +18,8 @@ services:
       - "8081:8081"
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb+srv://admin:admin@desafio3.ki7aa.mongodb.net/db_ticket?retryWrites=true&w=majority&appName=Desafio3
+      - RABBITMQ_URI=amqps://kgihtnno:n7PHjQxrqXGZajuTurqcM04BN9pw66T0@shrimp.rmq.cloudamqp.com/kgihtnno
+      - SPRING_RABBITMQ_HOST=rabbitmq
     depends_on:
       - db_ticket
 
