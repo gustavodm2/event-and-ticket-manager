@@ -1,7 +1,7 @@
 services:
   ms-event-management:
     build:
-      context: .\ms-event-manager
+      context: ./ms-event-manager
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
@@ -13,7 +13,7 @@ services:
 
   ms-ticket-management:
     build:
-      context: .\ms-ticket-manager
+      context: ./ms-ticket-manager
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
