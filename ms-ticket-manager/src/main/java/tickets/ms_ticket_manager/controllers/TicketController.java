@@ -75,6 +75,12 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
+    @Operation(summary = "Get ticket by ID", description = "Fetches a ticket by its unique ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ticket fetched successfully"),
+            @ApiResponse(responseCode = "404", description = "Ticket not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/get-ticket/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable String id){
         Ticket ticket = ticketService.getTicketById(id);
