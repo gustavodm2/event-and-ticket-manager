@@ -46,8 +46,13 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @Operation(summary = "Get an event by ID", description = "Fetches a specific event by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Event successfully retrieved", content = @Content(schema = @Schema(implementation = Event.class))),
+            @ApiResponse(responseCode = "404", description = "Event not found")
+    })
     @GetMapping("/get-event/{id}")
-    public ResponseEntity<Event> getEventById(@PathVariable String id){
+    public ResponseEntity<Event> getEventById(@PathVariable String id) {
         Event event = eventService.getEventById(id);
         return ResponseEntity.ok(event);
     }
