@@ -1,5 +1,8 @@
 package tickets.ms_ticket_manager.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,12 @@ public class TicketController {
     private String id;
     private UpdateTicketDTO dto;
 
+    @Operation(summary = "Create a new ticket", description = "Creates a new ticket and returns the created ticket")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ticket created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping("/create-ticket")
     public ResponseEntity<Ticket> createTicket(@RequestBody CreateTicketDTO createTicketDTO){
         Ticket createdTicket = ticketService.createTicket(createTicketDTO);
