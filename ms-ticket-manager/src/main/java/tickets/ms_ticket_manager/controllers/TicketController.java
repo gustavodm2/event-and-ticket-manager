@@ -37,7 +37,11 @@ public class TicketController {
         return ResponseEntity.ok(createdTicket);
     }
 
-
+    @Operation(summary = "Get all tickets", description = "Fetches all tickets from the database")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/get-all-tickets")
     public ResponseEntity<List<Ticket>> getAllTickets(){
         List<Ticket> tickets = ticketService.getAllTickets();
