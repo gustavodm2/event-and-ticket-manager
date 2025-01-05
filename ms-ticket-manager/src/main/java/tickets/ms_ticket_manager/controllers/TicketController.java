@@ -62,6 +62,12 @@ public class TicketController {
         return ResponseEntity.ok(checkTicketByEventResponse);
     }
 
+    @Operation(summary = "Get tickets by event ID", description = "Fetches tickets associated with a specific event ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully"),
+            @ApiResponse(responseCode = "404", description = "Event not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/get-tickets-by-event/{eventId}")
     public ResponseEntity<List<Ticket>> getTicketsByEventId(@PathVariable String eventId){
         List<Ticket> tickets = ticketService.getTicketsByEventId(eventId);
