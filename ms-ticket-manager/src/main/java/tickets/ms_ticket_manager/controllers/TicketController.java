@@ -88,6 +88,12 @@ public class TicketController {
         return ResponseEntity.ok(ticket);
     }
 
+    @Operation(summary = "Get tickets by CPF", description = "Fetches tickets associated with a specific CPF")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully"),
+            @ApiResponse(responseCode = "404", description = "Tickets not found for the given CPF"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/get-ticket-by-cpf/{cpf}")
     public ResponseEntity<List<Ticket>> getTicketsByCpf(@PathVariable String cpf){
         List<Ticket> tickets = ticketService.getTicketByCpf(cpf);
