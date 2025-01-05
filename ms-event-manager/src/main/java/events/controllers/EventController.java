@@ -57,6 +57,8 @@ public class EventController {
         return ResponseEntity.ok(event);
     }
 
+    @Operation(summary = "Get all events sorted by name", description = "Returns a list of events sorted by their names.")
+    @ApiResponse(responseCode = "200", description = "Sorted list of events successfully retrieved")
     @GetMapping("/get-all-events/sorted")
     public ResponseEntity<List<Event>> getAllEventsSorted() {
         List<Event> events = eventService.getAllEventsSortedByName();
