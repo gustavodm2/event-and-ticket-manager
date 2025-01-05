@@ -114,6 +114,12 @@ public class TicketController {
         return ResponseEntity.ok(updatedTicket);
     }
 
+    @Operation(summary = "Cancel a ticket", description = "Marks a ticket as inactive")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ticket canceled successfully"),
+            @ApiResponse(responseCode = "404", description = "Ticket not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @DeleteMapping("/cancel-ticket/{id}")
     public ResponseEntity<Ticket> deleteTicket(@PathVariable String id){
         Ticket deletedTicket = ticketService.deleteTicket(id);
