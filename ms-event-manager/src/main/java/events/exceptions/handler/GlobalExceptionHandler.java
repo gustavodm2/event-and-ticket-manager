@@ -14,38 +14,19 @@ import java.time.format.DateTimeFormatter;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private String getCurrentTimestamp() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    }
-
-    @ExceptionHandler(FeignException.class)
-    public ResponseEntity<ErrorResponse> handleFeignException(FeignException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                "Error while communicating with the ticket service: " + ex.getMessage(),
-                ex.status(),
-                getCurrentTimestamp()
-        );
-        return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.status()));
-    }
-
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                ex.getMessage(),
-                HttpStatus.NOT_FOUND.value(),
-                getCurrentTimestamp()
-        );
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                "An unexpected error occurred",
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                getCurrentTimestamp()
-        );
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<String> handleGenericException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error: " + ex.getMessage());
     }
 }
 

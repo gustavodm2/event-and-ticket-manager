@@ -4,6 +4,11 @@ import events.entities.DTOs.CreateEventDTO;
 import events.entities.DTOs.UpdateEventDTO;
 import events.entities.Event;
 import events.services.EventService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +26,15 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @Operation(summary = "Create a new event", description = "Endpoint to create a new event with name, date/time, and ZIP code.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Event successfully created", content = @Content(schema = @Schema(implementation = Event.class))),
+            @ApiResponse(responseCode = "400", description = "Validation error"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PostMapping("/create-event")
     public ResponseEntity<Event> createEvent(@RequestBody CreateEventDTO event) {
         Event createdEvent = eventService.createEvent(event);
-
         return ResponseEntity.ok(createdEvent);
     }
 

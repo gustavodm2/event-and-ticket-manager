@@ -41,6 +41,10 @@ public class EventService {
 
     public Event createEvent(CreateEventDTO dto) {
         Event event = createEventMapper.toEntity(dto);
+        Address address = cepService.getAddressFromCep(dto.getCep());
+        if (address.getLocalidade() == null) {
+            throw new IllegalArgumentException("Invalid CEP: Address not found.");
+        }
 
         return eventRepository.save(event);
     }
