@@ -127,6 +127,12 @@ public class TicketController {
         return ResponseEntity.ok(deletedTicket);
     }
 
+    @Operation(summary = "Cancel tickets by CPF", description = "Marks all tickets associated with a CPF as inactive")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Tickets canceled successfully"),
+            @ApiResponse(responseCode = "404", description = "Tickets not found for the given CPF"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @DeleteMapping("/cancel-ticket-by-cpf/{cpf}")
     public ResponseEntity<List<Ticket>> deleteTicketByCpf(@PathVariable String cpf){
         List<Ticket> deletedTickets = ticketService.deleteTicketByCpf(cpf);
