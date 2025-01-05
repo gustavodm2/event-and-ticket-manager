@@ -38,8 +38,10 @@ public class EventController {
         return ResponseEntity.ok(createdEvent);
     }
 
+    @Operation(summary = "Get all events", description = "Returns a list of all registered events.")
+    @ApiResponse(responseCode = "200", description = "List of events successfully retrieved")
     @GetMapping("/get-all-events")
-    public ResponseEntity<List<Event>> getAllEvents(){
+    public ResponseEntity<List<Event>> getAllEvents() {
         List<Event> events = eventService.getAllEvents();
         return ResponseEntity.ok(events);
     }
