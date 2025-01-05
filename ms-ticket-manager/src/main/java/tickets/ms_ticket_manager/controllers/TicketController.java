@@ -101,6 +101,12 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
+    @Operation(summary = "Update a ticket", description = "Updates the details of an existing ticket")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ticket updated successfully"),
+            @ApiResponse(responseCode = "404", description = "Ticket not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PutMapping("/update-ticket/{id}")
     public ResponseEntity<Ticket> updateTicket(@PathVariable String id, @RequestBody UpdateTicketDTO dto){
         Ticket updatedTicket = ticketService.updateTicket(dto, id);
