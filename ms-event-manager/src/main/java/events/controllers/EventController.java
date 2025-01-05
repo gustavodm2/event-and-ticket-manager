@@ -65,10 +65,14 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @Operation(summary = "Update an event", description = "Updates the details of a specific event by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Event successfully updated", content = @Content(schema = @Schema(implementation = Event.class))),
+            @ApiResponse(responseCode = "404", description = "Event not found")
+    })
     @PutMapping("/update-event/{id}")
-    public ResponseEntity<Event> updateEvent(@PathVariable String id, @RequestBody UpdateEventDTO event){
+    public ResponseEntity<Event> updateEvent(@PathVariable String id, @RequestBody UpdateEventDTO event) {
         Event updatedEvent = eventService.updateEvent(event, id);
-
         return ResponseEntity.ok(updatedEvent);
     }
 
