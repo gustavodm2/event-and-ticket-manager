@@ -1,6 +1,8 @@
 package tickets.ms_ticket_manager.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.Data;
@@ -21,12 +23,10 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
-    private String id;
-    private UpdateTicketDTO dto;
 
     @Operation(summary = "Create a new ticket", description = "Creates a new ticket and returns the created ticket")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ticket created successfully"),
+            @ApiResponse(responseCode = "200", description = "Ticket created successfully", content = @Content(schema = @Schema(implementation = Ticket.class))),
             @ApiResponse(responseCode = "400", description = "Invalid request data"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -39,7 +39,7 @@ public class TicketController {
 
     @Operation(summary = "Get all tickets", description = "Fetches all tickets from the database")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully"),
+            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully", content = @Content(schema = @Schema(implementation = Ticket.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/get-all-tickets")
@@ -51,7 +51,7 @@ public class TicketController {
 
     @Operation(summary = "Check tickets by event", description = "Checks if there are tickets for a specific event")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Tickets checked successfully"),
+            @ApiResponse(responseCode = "200", description = "Tickets checked successfully", content = @Content(schema = @Schema(implementation = CheckTicketByEventResponse.class))),
             @ApiResponse(responseCode = "404", description = "Event not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -64,7 +64,7 @@ public class TicketController {
 
     @Operation(summary = "Get tickets by event ID", description = "Fetches tickets associated with a specific event ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully"),
+            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully", content = @Content(schema = @Schema(implementation = Ticket.class))),
             @ApiResponse(responseCode = "404", description = "Event not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -90,7 +90,7 @@ public class TicketController {
 
     @Operation(summary = "Get tickets by CPF", description = "Fetches tickets associated with a specific CPF")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully"),
+            @ApiResponse(responseCode = "200", description = "Tickets fetched successfully", content = @Content(schema = @Schema(implementation = Ticket.class))),
             @ApiResponse(responseCode = "404", description = "Tickets not found for the given CPF"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -103,7 +103,7 @@ public class TicketController {
 
     @Operation(summary = "Update a ticket", description = "Updates the details of an existing ticket")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ticket updated successfully"),
+            @ApiResponse(responseCode = "200", description = "Ticket updated successfully", content = @Content(schema = @Schema(implementation = Ticket.class))),
             @ApiResponse(responseCode = "404", description = "Ticket not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -116,7 +116,7 @@ public class TicketController {
 
     @Operation(summary = "Cancel a ticket", description = "Marks a ticket as inactive")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ticket canceled successfully"),
+            @ApiResponse(responseCode = "200", description = "Ticket canceled successfully", content = @Content(schema = @Schema(implementation = Ticket.class))),
             @ApiResponse(responseCode = "404", description = "Ticket not found"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
@@ -129,7 +129,7 @@ public class TicketController {
 
     @Operation(summary = "Cancel tickets by CPF", description = "Marks all tickets associated with a CPF as inactive")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Tickets canceled successfully"),
+            @ApiResponse(responseCode = "200", description = "Tickets canceled successfully", content = @Content(schema = @Schema(implementation = Ticket.class))),
             @ApiResponse(responseCode = "404", description = "Tickets not found for the given CPF"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
