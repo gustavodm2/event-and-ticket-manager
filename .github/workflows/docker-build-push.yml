@@ -1,0 +1,53 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - feat/github-workflow
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Images
+    runs-on: ubuntu-latest
+
+    env:
+      EVENT_IMAGE_NAME: gustavothegamer/ms-event
+      TICKET_IMAGE_NAME: gustavothegamer/ms-ticket
+      EVENT_IMAGE_TAG: latest
+      TICKET_IMAGE_TAG: latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build ms-event-manager JAR
+        run: |
+          cd ms-event-manager
+          mvn clean package -DskipTests
+
+      - name: Build ms-ticket-manager JAR
+        run: |
+          cd ms-ticket-manager
+          mvn clean package -DskipTests
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push ms-event-manager image
+        run: |
+          docker build -t $EVENT_IMAGE_NAME:$EVENT_IMAGE_TAG ./ms-event-manager
+          docker push $EVENT_IMAGE_NAME:$EVENT_IMAGE_TAG
+
+      - name: Build and push ms-ticket-manager image
+        run: |
+          docker build -t $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG ./ms-ticket-manager
+          docker push $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG
