@@ -1,6 +1,6 @@
 services:
   ms-event-management:
-    image: gustavothegamer/ms-event:4
+    image: gustavothegamer/ms-event:latest
     ports:
       - "8080:8080"
     environment:
@@ -10,7 +10,7 @@ services:
       - db_event
 
   ms-ticket-management:
-    image: gustavothegamer/ms-ticket:5
+    image: gustavothegamer/ms-ticket:latest
     ports:
       - "8081:8081"
     environment:
