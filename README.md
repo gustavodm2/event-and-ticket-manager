@@ -1,5 +1,5 @@
 
-# README - Event and Ticket Management Microservices
+# Event and Ticket Management Microservices
 
 ## Overview
 
