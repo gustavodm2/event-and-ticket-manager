@@ -88,9 +88,9 @@ public class EventController {
         return ResponseEntity.ok(deletedEvent);
     }
 
-    @GetMapping("/testa2")
+    @GetMapping("/testa3")
     public String test(){
-        return "Hello Worlda2";
+        return "Hello Worlda3";
     }
 
 
