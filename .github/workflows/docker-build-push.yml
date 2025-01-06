@@ -13,8 +13,8 @@ jobs:
     env:
       EVENT_IMAGE_NAME: gustavothegamer/ms-event
       TICKET_IMAGE_NAME: gustavothegamer/ms-ticket
-      EVENT_IMAGE_TAG: 2
-      TICKET_IMAGE_TAG: 2
+      EVENT_IMAGE_TAG: 4
+      TICKET_IMAGE_TAG: 5
 
     steps:
       - name: Checkout code
