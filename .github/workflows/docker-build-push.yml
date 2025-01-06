@@ -45,10 +45,12 @@ jobs:
 
       - name: Build and push ms-event-manager image
         run: |
-          docker build -t $EVENT_IMAGE_NAME:$EVENT_IMAGE_TAG ./ms-event-manager
+          cd /ms-event-manager
+          docker build -t $EVENT_IMAGE_NAME:$EVENT_IMAGE_TAG .
           docker push $EVENT_IMAGE_NAME:$EVENT_IMAGE_TAG
 
       - name: Build and push ms-ticket-manager image
         run: |
-          docker build -t $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG ./ms-ticket-manager
+          cd /ms-ticket-manager
+          docker build -t $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG .
           docker push $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG
