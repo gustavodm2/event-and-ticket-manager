@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feat/github-workflow
+      - main
 
 jobs:
   build-and-push:
