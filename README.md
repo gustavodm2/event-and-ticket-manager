@@ -74,8 +74,8 @@ Both services use RESTful APIs and are documented using Swagger. Docker is used 
 
 4. Access the services:
    - **Swagger Documentation**:
-     - Event Manager: `http://localhost:<event-service-port>/swagger-ui.html`
-     - Ticket Manager: `http://localhost:<ticket-service-port>/swagger-ui.html`
+     - Event Manager: `http://localhost:8080/swagger-ui.html`
+     - Ticket Manager: `http://localhost:8081/swagger-ui.html`
 
 ---
 
@@ -111,7 +111,7 @@ Both services use RESTful APIs and are documented using Swagger. Docker is used 
 
 ### **Event Table**
 
-- `id`: Unique identifier (UUID)
+- `id`: Unique identifier 
 - `name`: Name of the event
 - `date`: Date and time of the event
 - `location`: Location details
@@ -119,7 +119,7 @@ Both services use RESTful APIs and are documented using Swagger. Docker is used 
 
 ### **Ticket Table**
 
-- `id`: Unique identifier (UUID)
+- `id`: Unique identifier 
 - `eventId`: Foreign key to the event
 - `status`: Ticket status (e.g., ACTIVE, INACTIVE)
 - `cpf`: CPF of the ticket holder
