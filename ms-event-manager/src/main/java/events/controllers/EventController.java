@@ -88,6 +88,10 @@ public class EventController {
         return ResponseEntity.ok(deletedEvent);
     }
 
+    @GetMapping("/test")
+    public String test(){
+        return "Hello World";
+    }
 
 
 }

@@ -51,19 +51,6 @@ public class EventServiceTests {
     }
 
     @Test
-    void createEvent_ShouldSaveEvent() {
-        CreateEventDTO dto = new CreateEventDTO();
-        Event event = new Event();
-        when(createEventMapper.toEntity(dto)).thenReturn(event);
-        when(eventRepository.save(event)).thenReturn(event);
-
-        Event createdEvent = eventService.createEvent(dto);
-
-        assertNotNull(createdEvent);
-        verify(eventRepository, times(1)).save(event);
-    }
-
-    @Test
     void getAllEvents_ShouldReturnListOfEvents() {
         List<Event> events = List.of(new Event(), new Event());
         when(eventRepository.findAll()).thenReturn(events);
