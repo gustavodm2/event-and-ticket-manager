@@ -3,7 +3,6 @@ name: Build and Push Docker Images
 on:
   push:
     branches:
-      - feat/github-workflow
       - main
 
 jobs:
@@ -14,8 +13,8 @@ jobs:
     env:
       EVENT_IMAGE_NAME: gustavothegamer/ms-event
       TICKET_IMAGE_NAME: gustavothegamer/ms-ticket
-      EVENT_IMAGE_TAG: latest
-      TICKET_IMAGE_TAG: latest
+      EVENT_IMAGE_TAG: 2
+      TICKET_IMAGE_TAG: 2
 
     steps:
       - name: Checkout code
