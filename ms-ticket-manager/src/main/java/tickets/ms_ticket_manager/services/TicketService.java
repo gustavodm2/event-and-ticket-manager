@@ -35,11 +35,11 @@ public class TicketService {
     private EventClient eventClient;
 
     public Ticket createTicket(CreateTicketDTO createTicketDTO){
-
-
         Ticket ticket = createTicketMap.toEntity(createTicketDTO);
 
         ticketProducer.publishMessageEmail(ticket);
+
+        System.out.print("Ticket salvo: " + ticket);
 
         return ticketRepository.save(ticket);
     }

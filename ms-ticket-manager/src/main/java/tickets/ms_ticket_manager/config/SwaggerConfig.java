@@ -10,10 +10,12 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
+
         return new OpenAPI()
                 .info(new Info()
                         .title("Ticket Management API")
                         .version("1.0.0")
                         .description("API for event and ticket management."));
     }
+
 }

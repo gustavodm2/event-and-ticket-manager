@@ -32,11 +32,11 @@ public class UpdateTicketMap {
         }
 
         if (dto.getBRLAmount() != null) {
-            ticket.setBRLAmount(dto.getBRLAmount());
+            ticket.setBrlamount(dto.getBRLAmount());
         }
 
         if (dto.getUSDAmount() != null) {
-            ticket.setUSDAmount(dto.getUSDAmount());
+            ticket.setUsdamount(dto.getUSDAmount());
         }
 
         if (dto.getStatus() != null) {

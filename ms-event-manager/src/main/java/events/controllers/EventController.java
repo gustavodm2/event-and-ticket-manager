@@ -79,8 +79,8 @@ public class EventController {
     @Operation(summary = "Delete an event", description = "Marks an event as deleted, provided it has no active tickets.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Event successfully deleted", content = @Content(schema = @Schema(implementation = Event.class))),
-            @ApiResponse(responseCode = "400", description = "Cannot delete events with active tickets"),
-            @ApiResponse(responseCode = "404", description = "Event not found")
+            @ApiResponse(responseCode = "404", description = "Event not found"),
+            @ApiResponse(responseCode = "409", description = "Cannot delete events with active tickets")
     })
     @DeleteMapping("/delete-event/{id}")
     public ResponseEntity<Event> deleteEvent(@PathVariable String id) {
@@ -88,10 +88,6 @@ public class EventController {
         return ResponseEntity.ok(deletedEvent);
     }
 
-    @GetMapping("/testa4")
-    public String test(){
-        return "Hello Worlda4";
-    }
 
 
 }

@@ -23,9 +23,16 @@ public class CreateTicketMap {
         EventDTO event = eventService.getEventFromId(dto.getEventId());
         ticket.setEvent(event);
 
-        ticket.setBRLAmount(dto.getBRLAmount());
-        ticket.setUSDAmount(dto.getUSDAmount());
+        if(dto.getBrlamount() != null){
+            ticket.setBrlamount(dto.getBrlamount());
+        }
+        if(dto.getUsdamount() != null) {
+            ticket.setUsdamount(dto.getUsdamount());
+        }
+
         ticket.setStatus(dto.getStatus());
+
+        System.out.printf("Ticket final para persistir: " + ticket);
 
         return ticket;
     }
