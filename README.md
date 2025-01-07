@@ -47,37 +47,6 @@ Both services use RESTful APIs and are documented using Swagger. Docker is used 
 
 ---
 
-## Setup and Installation
-
-### Prerequisites
-
-- Docker and Docker Compose
-- Java 17
-- Maven
-
-### Steps
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/gustavodm2/event-and-ticket-manager.git
-   ```
-
-2. Build the projects using Maven:
-   ```bash
-   mvn clean install
-   ```
-
-3. Start the services using Docker Compose:
-   ```bash
-   docker-compose up
-   ```
-
-4. Access the services:
-   - **Swagger Documentation**:
-     - Event Manager: `http://localhost:8080/swagger-ui/index.html`
-     - Ticket Manager: `http://localhost:8081/swagger-ui/index.html`
-
----
 
 ## API Endpoints
 
