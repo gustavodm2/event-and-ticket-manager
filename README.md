@@ -107,25 +107,6 @@ Both services use RESTful APIs and are documented using Swagger. Docker is used 
 
 ---
 
-## Database Schema
-
-### **Event Table**
-
-- `id`: Unique identifier 
-- `name`: Name of the event
-- `date`: Date and time of the event
-- `location`: Location details
-- `isDeleted`: Boolean flag for soft deletion
-
-### **Ticket Table**
-
-- `id`: Unique identifier 
-- `eventId`: Foreign key to the event
-- `status`: Ticket status (e.g., ACTIVE, INACTIVE)
-- `cpf`: CPF of the ticket holder
-
----
-
 ## Running Tests
 
 To execute tests for both services:
