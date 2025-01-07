@@ -52,6 +52,3 @@ jobs:
           docker build -t $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG ./ms-ticket-manager
           docker push $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG
 
-      - name: Pull images
-        run: |
-          docker-compose pull
