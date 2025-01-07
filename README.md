@@ -74,8 +74,8 @@ Both services use RESTful APIs and are documented using Swagger. Docker is used 
 
 4. Access the services:
    - **Swagger Documentation**:
-     - Event Manager: `http://localhost:8080/swagger-ui.html`
-     - Ticket Manager: `http://localhost:8081/swagger-ui.html`
+     - Event Manager: `http://localhost:8080/swagger-ui/index.html`
+     - Ticket Manager: `http://localhost:8081/swagger-ui/index.html`
 
 ---
 
