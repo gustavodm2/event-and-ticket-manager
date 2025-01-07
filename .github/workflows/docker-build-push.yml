@@ -51,3 +51,7 @@ jobs:
         run: |
           docker build -t $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG ./ms-ticket-manager
           docker push $TICKET_IMAGE_NAME:$TICKET_IMAGE_TAG
+<<<<<<< HEAD
+=======
+
+>>>>>>> 40ab7b0aabe4fd1f1dd697c2b4a81874063d3065
